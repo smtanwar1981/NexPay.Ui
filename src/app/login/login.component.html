@@ -1,0 +1,36 @@
+<h2>Login</h2>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="card-container">
+        <input type="text" formControlName="email" placeholder="Email" />
+    </div>
+    <div class="card-container">
+        <small class="form-text text-muted"
+            *ngIf="loginForm.controls.email.touched && loginForm.controls.email.errors?.required">
+            Please enter email address.!
+        </small>
+        <small class="form-text text-muted"
+            *ngIf="loginForm.controls.email.touched && loginForm.controls.email.errors?.email">
+            Email address not well formed.!
+        </small>
+    </div>
+    <div class="card-container">
+        <input type="password" formControlName="password" placeholder="Password" />
+    </div>
+    <div class="card-container">
+        <small class="form-text text-muted"
+            *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors?.required">
+            Please enter Password.!
+        </small>
+    </div>
+    <div class="card-container">
+        <a title="Sign up" (click)="signUp()">Sign Up</a>
+    </div>
+    <div class="card-container">
+        <input type="button" class="transform-button" (click)="resetLoginForm()" value="Reset" />&nbsp;&nbsp;
+        <input type="button" class="transform-button" (click)="onSubmit()" [disabled]="!loginForm.valid"
+            value="Login" />
+    </div>
+    <div class="card-container">
+        <b></b>
+    </div>
+</form>
