@@ -1,0 +1,42 @@
+<h2>Add New Contract</h2>
+<div [formGroup]="fxForm">
+    <div class="card-container card-container-ht">
+        <label>Select Currency From: <b class="required-field">*</b></label>
+        <select formControlName="fromCurrency" id="fromCurrency" class="select-currency">
+            <option value="-1">--Select--</option>
+            <option *ngFor="let item of supportedCurrencies.currencyCodes" [value]="item">{{item}}</option>
+        </select>
+    </div>
+    <div class="card-container card-container-ht">
+        <label>Select Currency To: <b class="required-field">*</b></label>
+        <select id="fromCurrency" formControlName="toCurrency" class="select-currency">
+            <option value="-1">--Select--</option>
+            <option *ngFor="let item of supportedCurrencies.currencyCodes" [value]="item">{{item}}</option>
+        </select>
+    </div>
+    <div class="card-container card-container-ht">
+        <label>Enter amount to convert: <b class="required-field">*</b></label>
+        <input formControlName="amountToConver" maxlength="5" pattern="\d*" class="input-amount" id="txtAmountToConvert"
+            type="number" placeholder="0.00" title="enter amount"
+            [ngClass]="{'invalid-amount' : fxForm.controls.amountToConver.touched && fxForm.controls.amountToConver.value > 99999}" />
+    </div>
+</div>
+<div *ngIf="fxRates != null && fxRates.conversionRate > 0">
+    <div class="card-container card-container-ht">
+        <label>Conversion Rate: </label>
+        <label>{{fxRates.conversionRate}}</label>
+    </div>
+    <div *ngIf="finalAmount && finalAmount > 0" class="card-container card-container-ht">
+        <label>Final amount: </label>
+        <label><b>{{finalAmount| number: '1.2-2'}} {{fxForm.controls['toCurrency'].value}}</b></label>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button id="btnSubmitContract" type="button" (click)="submitContract()" class="button">Submit</button>
+    </div>
+
+</div>
+
+<div class="card-container card-container-ht">
+    <button id="btnReset" type="button" (click)="resetFxForm()" class="button">Reset</button>&nbsp;&nbsp;
+    <button id="btnGetFxRate" type="button" (click)="getFxRate()" [disabled]="!fxForm.valid" class="button">Get
+        Rate</button>
+</div>

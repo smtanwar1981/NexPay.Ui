@@ -1,1 +1,13 @@
-<p>user works!</p>
+<div class="tab">
+    <button class="tablinks" (click)="tabButtonClickHandler('showContracts')">Your Contracts</button>
+    <button class="tablinks" (click)="tabButtonClickHandler('addNewContract')">Add New
+        Contract</button>
+</div>
+
+<app-contract-grid *ngIf="showContracts" [contracts]="contracts"
+    (deleteContractEventEmitter)="deleteContractEventEmitterHandler($event)"></app-contract-grid>
+
+<app-add-new-contract *ngIf="!showContracts" [fxForm]="fxForm" [supportedCurrencies]="supportedCurrencies"
+    [fxRates]="fxRates" [finalAmount]="finalAmount" (resetFormEventEmitter)="resetFormEventEmitterHandler()"
+    (submitContractEventEmitter)="submitContractEventEmitterHandler()"
+    (getFxRatesEventEmitter)="getFxRatesEventEmitterHandler()"></app-add-new-contract>

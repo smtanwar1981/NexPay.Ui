@@ -1,0 +1,48 @@
+<h2>Register New User</h2>
+
+<div style="float:left" [formGroup]="registrationForm">
+    <div class="card-container card-container-ht">
+        <input type="text" formControlName="firstName" id="firstName" placeholder="First Name" /><b
+            class="required-field">*</b><br />
+        <small class="form-text text-muted"
+            *ngIf="formControl.firstName.touched && formControl.firstName.errors?.required">
+            Please enter First Name.
+        </small>
+    </div>
+    <div class="card-container card-container-ht">
+        <input type="text" id="lastName" placeholder="Last Name" />
+    </div>
+    <div class="card-container card-container-ht">
+        <input type="text" formControlName="email" id="email" placeholder="Email" /><b
+            class="required-field">*</b><br />
+        <small class="form-text text-muted" *ngIf="formControl.email.touched && formControl.email.errors?.required">
+            Please enter email address.!
+        </small>
+        <small class="form-text text-muted" *ngIf="formControl.email.touched && formControl.email.errors?.email">
+            Email address not well formed.!
+        </small>
+    </div>
+    <div class="card-container card-container-ht">
+        <input type="password" formControlName="password" id="password" placeholder="Password" /><b
+            class="required-field">*</b><br />
+        <small class="form-text text-muted"
+            *ngIf="formControl.password.touched && formControl.password.errors?.required">
+            Please enter Password.
+        </small>
+    </div>
+    <div class="card-container card-container-ht">
+        <input type="password" formControlName="confirmPassword" id="confirmPassword"
+            placeholder="Confirm Password" /><b class="required-field">*</b><br />
+        <small class="form-text text-muted"
+            *ngIf="formControl.confirmPassword.touched && formControl.confirmPassword.errors?.required">
+            Please enter Confirm Password also.
+        </small>
+        <small class="form-text text-muted"
+            *ngIf="formControl.confirmPassword.touched && registrationForm.errors?.notSame">
+            Confirm password do not match.
+        </small>
+    </div>
+    <button (click)="submitRegisteration()" [disabled]="!registrationForm.valid">Submit</button>
+    &nbsp;&nbsp;
+    <button (click)="resetForm()">Reset</button>
+</div>

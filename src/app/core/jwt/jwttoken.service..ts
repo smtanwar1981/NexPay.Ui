@@ -40,11 +40,16 @@ export class JWTTokenService {
 
   getExpiryTime() {
     this.decodeToken();
-    return this.decodedToken ? this.decodedToken.exp : null;
+    return this.decodedToken ? parseInt(this.decodedToken.exp) : null;
+  }
+
+  getExpiryTimeInMinutes() {
+    const expiryTime: number = this.getExpiryTime();
+    return ((1000 * expiryTime) - (new Date()).getTime());
   }
 
   isTokenExpired(): boolean {
-    const expiryTime: any = this.getExpiryTime();
+    const expiryTime: number = this.getExpiryTime();
     if (expiryTime) {
       return ((1000 * expiryTime) - (new Date()).getTime()) < 5000;
     } else {

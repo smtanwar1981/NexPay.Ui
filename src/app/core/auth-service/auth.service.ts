@@ -7,6 +7,7 @@ import { JwtToken } from 'src/app/models/jwt-token.model';
 import { Router } from '@angular/router';
 import { Constants } from 'src/app/common/constants';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { environment } from 'src/app/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class AuthService {
   constructor(private httpClient: HttpClient,
     private localStorage: LocalStorageService,
     private jwtTokenService: JWTTokenService,
-    private router: Router) { }
+    private router: Router,
+    private localStorageService: LocalStorageService) { }
 
   setIsLoggedInBS(value) {
     this.isLoggedIn.next(value);
@@ -27,14 +29,14 @@ export class AuthService {
   getIsLoggedInBS(): Observable<boolean> {
     return this.isLoggedIn.asObservable();
   }
-  
+
   getJWTToken(username: string, password: string): void {
     let request = { username: username, password: password };
-    this.httpClient.post(`http://localhost:5278/Security/createToken`, request)
+    let loginApiUrl = environment.loginApiUrl;
+    this.httpClient.post(`${loginApiUrl}/Security/createToken`, request)
       .subscribe((data: LoginResponse) => {
         if (data) {
           this.localStorage.set(Constants.tokenName, data.token);
-          //this.jwtTokenService.setToken(data.token);
           let token: JwtToken = this.jwtTokenService.getDecodeToken();
           this.setIsLoggedInBS(true);
           if (token.isAdmin) {
@@ -42,7 +44,15 @@ export class AuthService {
           } else {
             this.router.navigate(['user'])
           }
+          setTimeout(() => { this.logout(); }, this.jwtTokenService.getExpiryTimeInMinutes());
         }
       });
+  }
+
+  logout() {
+    this.localStorageService.remove(Constants.tokenName);
+    this.setIsLoggedInBS(false);
+    alert('Session has expired, please login again.')
+    this.router.navigate(['login']);
   }
 }

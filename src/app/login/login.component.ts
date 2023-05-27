@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../core/auth-service/auth.service';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit {
    *
    */
   constructor(private formBuilder: FormBuilder,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private router: Router) {
 
   }
 
@@ -35,7 +37,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  signUp() {}
+  signUp() {
+    this.router.navigate(['register']);
+  }
 
   onSubmit() {
     this.authService.getJWTToken(this.loginForm.controls['email'].value, this.loginForm.controls['password'].value);

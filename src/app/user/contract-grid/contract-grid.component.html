@@ -1,12 +1,9 @@
-<h2>Contracts</h2>
+<h2>Your Contracts</h2>
 <div class="card-container">
     <table border="1" [cellSpacing]="5" [cellPadding]="5">
         <tr>
             <th>
                 Contract Id
-            </th>
-            <th>
-                Email
             </th>
             <th>
                 From Currency
@@ -35,9 +32,6 @@
                 {{item.contractId}}
             </td>
             <td>
-                {{item.userEmail}}
-            </td>
-            <td>
                 {{item.fromCurrencyCode}}
             </td>
             <td>
@@ -55,12 +49,8 @@
             <td>
                 {{item.contractStatus}}
             </td>
-            <td style="width: 150px;">
-                <button id="btnApprove" title="Approve"
-                    (click)="updateContractStatusHandler(contractStatusApprove, item)">Approve</button>
-                &nbsp;&nbsp;
-                <button id="btnReject" title="Reject"
-                    (click)="updateContractStatusHandler(contractStatusReject, item)">Reject</button>
+            <td style="width: 150px; text-align: center;">
+                <button id="btnDelete" title="delete" (click)="deleteContractHandler(item)">Delete</button>
             </td>
         </tr>
     </table>

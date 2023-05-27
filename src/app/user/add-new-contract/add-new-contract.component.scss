@@ -1,0 +1,25 @@
+.select-currency {
+    float: right;
+    position: relative;
+    left: 50px;
+    width: 100px;
+}
+
+.input-amount {
+    float: right;
+    position: relative;
+    width: 90px;
+    left: 50px;
+}
+
+.card-container-ht {
+    height: 50px;
+}
+
+.required-field {
+    color: red;
+}
+
+.invalid-amount {
+    border: 1px solid red;
+}
